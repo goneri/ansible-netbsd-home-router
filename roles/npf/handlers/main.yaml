@@ -1,0 +1,8 @@
+- name: reload npf
+  service:
+    name: npf
+    state: reloaded
+  become: true
+- name: reload sysctl
+  command: /sbin/sysctl -f /etc/sysctl.conf
+  become: true

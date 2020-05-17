@@ -1,0 +1,17 @@
+- hosts: t61-router
+  gather_facts: no
+  vars:
+    wan_nic: axe0
+    lan_nic: wm0
+    lan_ifconfig: 192.168.1.1 netmask 255.255.255.0
+  tasks:
+    - import_role:
+        name: network
+    - import_role:
+        name: packages
+    - import_role:
+        name: dhcpcd
+    - import_role:
+        name: dhcpd
+    - import_role:
+        name: npf

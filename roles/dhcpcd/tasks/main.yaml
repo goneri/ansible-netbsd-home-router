@@ -1,0 +1,26 @@
+- name: Enable dhcpcd
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^dhcpcd='
+    line: 'dhcpcd=YES'
+  become: true
+  notify: restart dhcpcd
+- name: DHCP on the wan NIC 
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^dhcpcd_flags='
+    line: 'dhcpcd_flags={{ wan_nic }}'
+  become: true
+  notify: restart dhcpcd
+- name: Ignore the MTU value
+  lineinfile:
+    path: /etc/dhcpcd.conf
+    regexp: '^option interface_mtu'
+    line: '# option interface_mtu  See: https://www.reddit.com/r/teksavvy/comments/glarqk/dhcp_sends_an_incorrect_mtu_value_576_vs_1500/'
+  become: true
+  notify: restart dhcpcd
+- name: Start dhcpd
+  service:
+    name: dhcpd
+    state: started
+  become: true

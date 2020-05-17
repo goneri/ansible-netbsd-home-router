@@ -1,0 +1,8 @@
+- name: Install the base packages
+  community.general.pkgin:
+    name:
+      - fish
+      - vim
+    state: present
+  become: true
+

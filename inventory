@@ -1,0 +1,1 @@
+t61-router  ansible_host=192.168.1.1 ansible_python_interpreter=/usr/pkg/bin/python3.7

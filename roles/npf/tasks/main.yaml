@@ -1,0 +1,27 @@
+- name: Collect network facts
+  setup:
+    gather_subset:
+      - '!all'
+      - network
+- set_fact:
+    _lan_network: '{{ hostvars[inventory_hostname]["ansible_facts"][ lan_nic ]["ipv4"][0]["network"] }}'
+- name: Configure npf
+  template:
+    src: npf.conf.j2
+    dest: /etc/npf.conf
+  become: true
+  notify: reload npf
+- name: Enable ipnat
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^npf='
+    line: 'npf=YES'
+  become: true
+  notify: reload npf
+- name: Enable IP forwarding 
+  lineinfile:
+    path: /etc/sysctl.conf
+    regexp: '^net.inet.ip.forwarding='
+    line: net.inet.ip.forwarding=1
+  become: true
+  notify: reload sysctl

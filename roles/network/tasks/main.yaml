@@ -1,0 +1,14 @@
+- name: set the hostname
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^hostname'
+    line: 'hostname={{ inventory_hostname }}'
+  become: true
+  notify: restart network
+- name: Set static IP on the wan NIC 
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^ifconfig_{{ lan_nic }}='
+    line: 'ifconfig_{{ lan_nic }}="{{ lan_ifconfig }}"'
+  become: true
+  notify: restart network

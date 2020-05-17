@@ -1,0 +1,28 @@
+- name: Configure the DHCP server
+  copy:
+    dest: /etc/dhcpd.conf
+    content: |
+      allow unknown-clients;
+      subnet 192.168.1.0 netmask 255.255.255.0 {
+        range 192.168.1.15 192.168.1.200;
+        default-lease-time 604800;
+        max-lease-time 604800;
+        option subnet-mask 255.255.255.0;
+        option domain-name-servers 8.8.8.8, 1.1.1.1;
+        option domain-name "lebouder.net";
+        option routers 192.168.1.1;
+      }
+  become: true
+  notify: restart dhcpd
+- name: Enable dhcpd
+  lineinfile:
+    path: /etc/rc.conf
+    regexp: '^dhcpd='
+    line: 'dhcpd=YES'
+  become: true
+  notify: restart dhcpd
+- name: Start dhcpd
+  service:
+    name: dhcpd
+    state: started
+  become: true
