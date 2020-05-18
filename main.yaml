@@ -13,5 +13,16 @@
         name: dhcpcd
     - import_role:
         name: dhcpd
+      vars:
+        dhcpd_static_hosts:
+          - name: DEV01CA55
+            mac: 3c:a8:2a:01:ca:55
+            address: 192.168.1.127
+          - name: nintendoswitch
+            mac: 64:b5:c6:c3:b8:9b
+            address: 192.168.1.17
+    # TODO: if npf starts before we get the Internet IP, it will have
+    # to be restarted. As a solution, we can use a dhcpcd hook to trigger
+    # an npf reload when the IP get changed.
     - import_role:
         name: npf

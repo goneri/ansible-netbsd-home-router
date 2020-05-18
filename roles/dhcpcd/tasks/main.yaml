@@ -19,8 +19,8 @@
     line: '# option interface_mtu  See: https://www.reddit.com/r/teksavvy/comments/glarqk/dhcp_sends_an_incorrect_mtu_value_576_vs_1500/'
   become: true
   notify: restart dhcpcd
-- name: Start dhcpd
+- name: Start dhcpcd
   service:
-    name: dhcpd
+    name: dhcpcd
     state: started
   become: true

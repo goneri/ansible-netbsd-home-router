@@ -12,6 +12,8 @@ $localnet = { {{ _lan_network }}/24 }
 
 map $ext_if dynamic $localnet -> $ext_v4
 
+
+
 procedure "log" {
         # Send log events to npflog0, see npfd(8)
         log: npflog0

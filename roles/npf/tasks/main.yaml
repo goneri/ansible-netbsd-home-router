@@ -11,7 +11,7 @@
     dest: /etc/npf.conf
   become: true
   notify: reload npf
-- name: Enable ipnat
+- name: Enable npf
   lineinfile:
     path: /etc/rc.conf
     regexp: '^npf='
